@@ -12,9 +12,9 @@ export default {
         }
     },
     props:{
-        itemList: Array,
+        itemListForAppList: Array,
     },
-    emits: ['deleteSignal'],
+    emits: ['deleteSignal', 'togglePurchase'],
     methods: {
 
         sendDeleteSignal(itemId){
@@ -32,51 +32,47 @@ export default {
 <template>
     
     <div class="container">
-        <h4>Existing Items</h4>
-        <!-- <div class="list-logo">
-            <span class="list-logo-inner"><img alt="Vue logo" src="src\assets\logo.png" /></span>
-        </div> -->
-        <div>
-            
-            <div class="item-list">
+        <div><h4>Existing Items</h4></div>
+              
+        <div class="item-list">
                 
-            <div class="item-list-items">
+            <div class="">
                 
-                <p v-if="itemList.length===0">Nice job! no Items are in there</p>
-            <ul>       
-                <li v-for="item in itemList" :key="(itemList.length)+1" class="item-list-element">
+                <p v-if="itemListForAppList.length===0">Nice job! no Items are in there</p>
+                <ul>       
+                    <li v-for="item in itemListForAppList" :key="(itemListForAppList.length)+1" class="item-list-element">
 
-                    <span>
-                        <span
-                        @click= "sendTogglePurchaseSignal(item.id)"
-                        class="item-list-element-name"
-                        v-bind:class="{strikeout: item.itemPurchesed===true, priority: item.priority=='true'}"
-                        >
-                            {{item.itemName}} 
+                        <span>
+                            <span
+                            @click= "sendTogglePurchaseSignal(item.id)"
+                            class="item-list-element-name"
+                            v-bind:class="{strikeout: item.itemPurchesed===true, priority: item.priority=='true'}"
+                            >
+                                {{item.itemName}} 
+                            </span>
+                            
+                            <span
+                            class="label-ebook"
+                            v-if="item.itemType ==='true' && !item.itemPurchesed"
+                            >
+                                {{itemTypeDict[0]}}
+                            </span>
+                            <span
+                            class="label-paperback"
+                            v-if="item.itemType==='false' && !item.itemPurchesed"
+                            >
+                                {{itemTypeDict[1]}}
+                            </span>
                         </span>
-                        
-                        <span
-                        class="label-ebook"
-                        v-if="item.itemType ==='true' && !item.itemPurchesed"
-                        >
-                            {{itemTypeDict[0]}}
+                        <span>
+                            <AppButton variant="delete" @click="sendDeleteSignal(item.id)"> Delete</AppButton>
                         </span>
-                        <span
-                        class="label-paperback"
-                        v-if="item.itemType==='false' && !item.itemPurchesed"
-                        >
-                            {{itemTypeDict[1]}}
-                        </span>
-                    </span>
-                    <span>
-                        <AppButton variant="delete" @click="sendDeleteSignal(item.id)"> Delete</AppButton>
-                    </span>
-                </li>
-            </ul>
+                    </li>
+                </ul>
             </div>
 
         
-        </div>
+        
         </div>
         
         
@@ -86,48 +82,85 @@ export default {
 
 <style>
 .container{
-    /* display: flex; */
-    margin-top: 2rem;
-    margin-right: 2rem;
-    margin-bottom: 2rem;
-    /* flex-direction: row; */
-    /* flex-wrap: wrap; */
-    /* justify-content: space-between; */
-    /* align-items: center; */
-    min-width:40%;
-    background-color: bisque;
-    /* padding: 2rem; */
+    margin: 1.5rem auto auto auto;
+    background: rgb(255 255 255 / 90%);
+    /* margin-top: 1.5rem; */
+    /* width: 35%; */
+    padding: 1rem;
+    border-style: solid;
+    border-width: 1pt;
+    border-color: blue;
+    /* height: 55vh; */
 
 }
+ul {
+    /* list-style-type: none; */
+    margin: 0;
+    padding: 0;
+}
 .container h4{
-    margin-left: 3rem;
+    margin-top: -1px;
+    
     /* padding-top: 1.5rem; */
 }
 .item-list{
-    font-size: 1rem;
-    color: #3d4852;
-    /* background: #01ff6f1c; */
+    /* font-size: 1rem; */
+    /* color: #3d4852; */
+    min-width:20rem;
+    height: 18.107rem;
+    /* overflow: hidden; */
+    /* background: orchid; */
     /* padding: 1rem; */
     /* margin: 1rem; */
 
-    /* overflow-y: scroll; */
-}
-.item-list-items{
     overflow-y: scroll;
-    height: 62vh;
-    /* min-width:52%; */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
+.item-list::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+/* Track */
+/* .item-list ::-webkit-scrollbar-track { */
+  /* box-shadow: inset 0 0 5px grey;  */
+  /*border-radius: 0px;*/
+/* } */
+ 
+/* Handle */
+/* .item-list ::-webkit-scrollbar-thumb {
+  background: red; 
+  border-radius: 0px;
+} */
+
+/* Handle on hover */
+/* .item-list ::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+} */
+/* .item-list-items{
+    overflow-y: scroll;
+    height: 40vh;
+    margin-left: -2px;
+    
+} */
+
 .item-list-element{
-    width: 85%;
-    margin: 0.2rem 3rem 0.5rem 0.5rem;
+    /* width: 85%; */
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
     display: flex;
     justify-content: space-between;
-    padding: 0.9rem 0.5rem 0.9rem 0.5rem;
+    padding: 0.5rem;
     background-color:white;
+    border-radius: 0.5rem;
+    background: rgba(255,255,255,0.5);
+    /* backdrop-filter: saturate(180%) blur(10px); */
+    
+
     
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 }
+
 .item-list-element > span:first-child{
     /* display: flex; */
     /* justify-content: flex-start; */
@@ -136,21 +169,18 @@ export default {
 
 .item-list-element-name{
     /* max-width:10rem; */
-    width: 9rem;
+    /* width: 9rem; */
     overflow-wrap: anywhere;
     overflow: clip;
+    cursor: pointer;
 }
 li span:nth-child(2) {
-  margin-bottom: 0rem;
-  margin-top: 0.1rem;
-  margin-left: 1rem;
-  letter-spacing: 2px;
-  display: inline-block;
-  font-weight: 900;
-  font-size: 0.685rem;
-  padding: 0.3em 0.7em;
-  line-height: 0.8;
-  border-radius: 0.5px;
+    margin-top: 0.1rem;
+    margin-left: 1rem;
+    letter-spacing: 2px;
+    display: inline-block;
+    font-weight: 900;
+    font-size: 0.6rem;
 }
 
 /* li span:nth-child(3){
@@ -186,14 +216,12 @@ li span:nth-child(2) {
 }
  
 .label-ebook{
-    color: #004a83;
-    background-color: #b3e9f3b0;
-    
-
+    color: #006ec4;
+    background-color: #0af9c130;
 }
 .label-paperback{
-    color: #0e5300;
-    background-color: #d0faef;
+    color: rgb(13, 136, 13);
+    background-color: #4cf0003a;
 
 }
 /* .btn-delete {

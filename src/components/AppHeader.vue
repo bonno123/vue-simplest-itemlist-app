@@ -1,23 +1,38 @@
 <script>
+import AppList from "./AppList.vue";
+import AppButton from "./AppButton.vue";
+import Modal from "./modal.vue";
+import InputField from "./InputField.vue";
 
 
 export default{
-
-  data(){
-    return{
-      showForm: false
-    }
+  data() {
+    return {
+        showForm: false,
+        showModal: false
+    };
   },
-  props:{
-      itemList: Array,
+  props: {
+    itemList: Array,
+  },
+  emits: ['editSignal', 'open', 'deleteSignal','togglePurchase', 'newItem'],
+  methods: {
+    toggleForm(_value) {
+        this.$emit("editSignal");
+        this.showForm = !this.showForm;
     },
-  emits: ['editSignal'],
-  methods:{
-    toggleForm(_value){
-      this.$emit('editSignal')
-      this.showForm= !this.showForm
+    sendAnotherDeleteSignal(itemId){
+      this.$emit('deleteSignal', itemId)
+    },
+    sendAnotherTogglePurchaseSignal(itemId){
+      this.$emit('togglePurchase', itemId)
+    },
+    sendNewItemAgain(e){
+      this.$emit('newItem', e)
     }
-  }
+
+  },
+  components: { AppList, AppButton, Modal, InputField }
 }
 </script>
 
@@ -28,56 +43,99 @@ export default{
     <h1>
       Shopping List App
     </h1>
-    <button v-if="showForm==false" @click="toggleForm" class="custom-btn btn-edit-items" 
-
-    > <span>Expand Form</span><span>Edit List !</span> 
-    </button>
-    <button v-if="showForm==true" @click="toggleForm" class="custom-btn btn-edit-cancel"
-    > 
-    <span> Close Edit</span> 
-    </button>
-  </div>
-  <div v-if="!this.showForm" class="header-lower">
-    <div>
-      <p v-if="itemList.length===0">You have no items to buy</p>
-      <ul>
-        <li v-for="item in itemList" :key="(itemList.length)+1" class="">
-
-          <span>
-            <span           
-            class=""
-            v-bind:class="{strikeout: item.itemPurchesed===true, priority: item.priority=='true'}"
-            >
-              {{item.itemName}} 
-            </span>
-            
-            <span
-            class="label-ebook"
-            v-if="item.itemType ==='true' && !item.itemPurchesed"
-            >Paperback
-              <!-- {{itemTypeDict[0]}} -->
-            </span>
-            <span
-            class="label-paperback"
-            v-if="item.itemType==='false' && !item.itemPurchesed"
-            >ebook
-              <!-- {{itemTypeDict[1]}} -->
-            </span>
-          </span>
-        </li>
-      </ul>
+    <div class="expand-form-btn">
+      <button 
+      v-if="showForm==false" 
+      @click="toggleForm" 
+      class="custom-btn btn-edit-items" 
+      > 
+        <span>Expand Form</span><span>Edit List !</span> 
+      </button>
+      <button 
+      v-if="showForm==true" 
+      @click="toggleForm" 
+      class="custom-btn btn-edit-cancel"
+      > 
+        <span> Close Edit</span> 
+      </button>
     </div>
-    <div><img alt="Vue logo" src="src\assets\logo.png" /></div>
+
+    <div class="show-modal-btn">
+      <AppButton
+      id="show-modal"
+      class=" app-p-sm"
+      variant="add-item"
+      @click="$emit('open')"
+      > Add item</AppButton>
+    </div>
     
   </div>
+
+  <!-- <div class="show-modal-btn">
+    <AppButton
+    id="show-modal"
+    class=" app-p-sm"
+    variant="add-item"
+    @click="$emit('open')"
+    > Add item</AppButton>
+  </div> -->
+
+  <div  class="header-lower">
+    <div
+    v-if="this.showForm"
+    class=""
+    >
+      <div class="expanded-input-space">
+        <InputField
+        v-on:newItem="sendNewItemAgain"
+        >
+          <!-- <template #footer-btn >     
+            <AppButton
+            class="app-p-sm "
+            :disabled="isDisabled" 
+            variant="save" 
+            v-on:click="this.$emit('save-signal')"
+            >        
+              Save Item
+            </AppButton>     
+          </template>  -->
+        </InputField>
+        
+      </div>
+
+    </div>
+    <div>
+      <AppList
+      :itemListForAppList="itemList"
+      v-on:deleteSignal="sendAnotherDeleteSignal"
+      v-on:togglePurchase="sendAnotherTogglePurchaseSignal"
+      >
+      </AppList>
+    </div>
+    <div 
+    v-if="!this.showForm"
+    class="logo-container"
+    ><img alt="Vue logo" src="src\assets\logo.png" /></div>
+  </div>
+
+  
     
 </div>
 </template>
 <style>
+
+
+  .logo-container{
+    display: flex;
+    align-self: center;
+    /* height: 354px; */
+    width: 362px;
+    justify-content: center;
+  }
   .header {
     display: flex;
     flex-flow: column;
-    margin: 3% 5%;
+    margin: 2rem 4rem 2rem 4rem;
     /* align-items: center; */
     /* justify-content: space-between; */
   }
@@ -85,14 +143,40 @@ export default{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-right: 3rem;
+    margin: 0rem 1rem 0rem 1rem;
   }
   .header-lower{
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 2%;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 0rem;
+  min-height: 40vh;
   }
+
+  @media screen and (min-width: 970px) {
+    div .show-modal-btn {
+      display: none;
+    }
+
+  }
+  @media screen and (max-width: 970px) {
+    div .expand-form-btn, .expanded-input-space {
+      display: none;
+    }
+    .header-upper{
+      flex-direction: column;
+      /* justify-content: center; */
+      align-items: baseline;
+    }
+  }
+
+
+
+
+
+      /*-------------------------------btn-edit-item----------------------------------------------------*/
+      /*-------------------------------btn-edit-item----------------------------------------------------*/
 
 
   .custom-btn{
@@ -114,8 +198,7 @@ export default{
     outline: none;
   }
 
-      /*-------------------------------btn-edit-item----------------------------------------------------*/
-      /*-------------------------------btn-edit-item----------------------------------------------------*/
+
 
   .btn-edit-items{
     position: relative;

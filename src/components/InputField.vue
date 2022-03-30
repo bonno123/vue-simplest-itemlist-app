@@ -24,7 +24,7 @@ export default {
       return this.newItem.length < 5 || this.newItemPackageType.length==0
     }
     },
-  // emits: ['newItem'],
+  emits: ['newItem'],
   methods:{
     sendNewItem(){
       if(this.newItem.length>=5 && this.newItemPackageType.length != 0){
@@ -111,13 +111,12 @@ export default {
       maxlength="50"
       v-on:keyup.enter="sendNewItem"
       >
-      <!-- {{newItem}} -->
       <p class="counter">{{charcount}}</p>
       </div>
     </div>
 
     <div class="input-form-priority"> 
-      <label for="id-priority"><h4>Priority</h4></label>
+      <label for="id-priority"><h4 style="margin-right:1rem">Priority</h4></label>
       <label >
         <select v-model="newItemPriority" id="id-priority">
           <option  value="true">High</option>
@@ -156,7 +155,9 @@ export default {
 
       <!-- {{newItemType}}--{{newItemPackageType}} -->
     </div>
+    
     <div class="save-button-posititon">
+      <slot name="footer-btn"></slot>
       <AppButton
       class="app-p-sm"
       :disabled="isDisabled" 
@@ -176,22 +177,17 @@ export default {
 
 <style>
   .save-button-posititon{
-    display: flex;
-    margin-top: 0.1rem;
-    justify-content: end;
+    /* display: flex;
+    justify-content: end;  */
+    float: right;
+    margin: 1.89rem -1.1rem auto auto;
   }
 
-  .input-form{
-    background: #01ff6f1c;
-    padding: 2rem;
-    margin: 2rem;
-    border-radius: 3px;
-    box-shadow: inset -20px -19px 13px -24px rgba(0,53,105,0.28);
+  /* .input-form{
     min-width: 35%;
-    display:flex;
+    display: flex;
     flex-flow: column wrap;
-    justify-content: space-between;
-  }
+  } */
 
   /* .input-form-top{
     
@@ -211,6 +207,10 @@ export default {
     justify-content: flex-start;
     align-items:center;
   }
+  /* .input-form-top{
+    width: 80%;
+    display: flex;
+  } */
 
   .counter{
     font-size: 0.8rem;
@@ -218,23 +218,23 @@ export default {
     padding-right: 10px; */
     padding: 5px 8px;
     border-style: solid;
-    border-color: rgba(8, 0, 82, 0.281);
+    border-color: rgba(64, 0, 82, 0.28);
     border-width: 1pt;
     cursor: text;
   }
 
 
   .input-field input{
-    width: 70%;
+    width: 85%;
     border-radius: 3px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid #f1f5f8;
     color: #606f7b;
     padding: 0.5rem 0.75rem;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     font-size: 1rem;
     letter-spacing: 0.5px;
-    margin: 0.5rem 0;
+    /* margin: 0.5rem 0; */
   }
 
   .input-form-priority{
@@ -243,11 +243,11 @@ export default {
     /* justify-content: space-evenly; */
   }
 
-  .input-form-bottom{
+  /* .input-form-bottom{
     display:flex;
     justify-content: space-between;
     align-items: flex-end;
-  }
+  } */
   /* -----------------------button-save-item -------------------------------*/
   /* -----------------------button-save-item -------------------------------*/
 

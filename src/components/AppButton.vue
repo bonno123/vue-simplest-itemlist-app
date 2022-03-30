@@ -21,12 +21,20 @@ export default{
             if(this.variant === 'save'){
                 return 'btn--save';
             }
+            if(this.variant === 'add-item'){
+                return 'btn--add-item';
+            }
             return '';
         }
     }
 }
 </script>
 <style>
+.btn--add-item{
+    background: linear-gradient(180deg, #32e88d, #00ff00);
+    color: rgb(255, 255, 255);
+    width: 8rem;
+}
 .btn--delete{
     color: white;
     background: linear-gradient(9deg, rgba(255, 84, 0, 0.84) 0%, rgb(255, 0, 0) 100%);
