@@ -135,7 +135,7 @@ export default{
   .header {
     display: flex;
     flex-flow: column;
-    margin: 2rem 4rem 2rem 4rem;
+    margin: 2rem 3rem 2rem 3rem;
     /* align-items: center; */
     /* justify-content: space-between; */
   }
@@ -154,13 +154,13 @@ export default{
   min-height: 40vh;
   }
 
-  @media screen and (min-width: 970px) {
+  @media screen and (min-width: 1044px) {
     div .show-modal-btn {
       display: none;
     }
 
   }
-  @media screen and (max-width: 970px) {
+  @media screen and (max-width: 1044px) {
     div .expand-form-btn, .expanded-input-space {
       display: none;
     }
@@ -168,6 +168,7 @@ export default{
       flex-direction: column;
       /* justify-content: center; */
       align-items: baseline;
+      margin: 0rem auto 0rem auto;
     }
   }
 

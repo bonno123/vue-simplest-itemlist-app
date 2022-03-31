@@ -60,7 +60,7 @@ export default {
   margin: 1.5rem auto auto auto;
   padding: 1.25rem 1rem;
   border-style: solid;
-  border-color: chartreuse;
+  border-color: rgb(0, 88, 4);
   border-width: 0.007pt;
   background-color: #fff;
   border-radius: 2px;

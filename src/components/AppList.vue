@@ -147,7 +147,7 @@ ul {
 
 .item-list-element{
     /* width: 85%; */
-    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+    margin: 0.5rem 0.5rem 0.8rem 0.5rem;
     display: flex;
     justify-content: space-between;
     padding: 0.5rem;
@@ -156,11 +156,16 @@ ul {
     background: rgba(255,255,255,0.5);
     /* backdrop-filter: saturate(180%) blur(10px); */
     
-
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    /* box-shadow: rgb(255 0 0 / 35%) 0px 0.0625em 0.0625em, rgb(39 0 255 / 33%) 0px 0.125em 0.5em, rgb(26 31 205 / 35%) 0px 0px 0px 1px inset; */
 }
-
+.item-list-element:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    /* box-shadow: 0 14px 28px rgb(0 255 57 / 22%), 0 8px 8px rgb(0 255 255 / 30%); */
+    /* box-shadow: rgba(0 255 184 / 15%) 0px 0.0625em 0.0625em, rgb(0 255 137 / 24%) 0px 0.125em 0.5em, rgb(0 255 20 / 52%) 0px 0px 0px 1px inset; */
+}
 .item-list-element > span:first-child{
     /* display: flex; */
     /* justify-content: flex-start; */
@@ -174,6 +179,11 @@ ul {
     overflow: clip;
     cursor: pointer;
 }
+.item-list-element-name:hover{
+    font-size: 1.01em;
+}
+
+
 li span:nth-child(2) {
     margin-top: 0.1rem;
     margin-left: 1rem;
