@@ -9,6 +9,9 @@ import AppButton from './components/AppButton.vue'
 import Modal from './components/Modal.vue'
 
 export default {
+  mounted(){
+    this.checkItemList()
+  },
   components: {
     InputField,
     AppHeader,
@@ -22,11 +25,11 @@ export default {
             expandForm: false,
             showModal: false,
             // newItem:'',
-            items: [
-                {id: 1,  itemName: 'Software'  , priority:'false' , itemType:'false', itemPackageType: "check1" ,  itemPurchesed: false}  ,
-                {id: 2,  itemName: 'Networking', priority:'true',  itemType:'false', itemPackageType: "check4",  itemPurchesed: false},
-                {id: 3,  itemName: 'Database'  , priority:'false' , itemType:'true'  , itemPackageType: "check1",  itemPurchesed: true}  ,
-            ],
+            items: []
+            //     {id: 1,  itemName: 'Software'  , priority:'false' , itemType:'false', itemPackageType: "check1",  itemPurchesed: false}  ,
+            //     {id: 2,  itemName: 'Networking', priority:'true',  itemType:'false', itemPackageType: "check4",  itemPurchesed: false},
+            //     {id: 3,  itemName: 'Database'  , priority:'false' , itemType:'true', itemPackageType: "check1",  itemPurchesed: true}  ,
+            // ],
           }
     },
     computed:{
@@ -41,18 +44,22 @@ export default {
     // 00831414 ram thapa wifi password
     methods: {
         addItem(e){
-          this.items.push({
+          let newItem = {
           id: this.items.length+1,
           itemName: (e.itemName),
           priority: (e.priority),
           itemType: (e.itemType),
           itemPackageType: (e.itemPackageType),
           itemPurchesed: false
-          })         
+          }
+          this.items.push(newItem)
+          localStorage.setItem(this.items.length, JSON.stringify(newItem))
+
         },
         removeItem(e){
           // alert(e)
           this.items.splice((this.items.findIndex(x => x.id === e)),1)
+          localStorage.removeItem(e)
         },
         editForm(_e){
             // alert(e)
@@ -65,6 +72,39 @@ export default {
         },
         openModal(){
           this.showModal=true
+        },
+        checkItemList(){
+          // alert(localStorage.length)
+          if(localStorage.length == 0){
+            // alert('true')
+            for(let i = 0; i < this.items.length; i++){
+              // alert(JSON.stringify(this.items[i]))
+              localStorage.setItem(this.items[i].id, JSON.stringify(this.items[i]))
+            }
+          }
+          else{
+            this.items=[]
+            // alert('false')
+            // this.items=[]
+            for(let i = 0; i < localStorage.length; i++){
+              var Item=JSON.parse(localStorage.getItem(localStorage.key(i)))
+              if(Item.id!= null){
+                this.items.push({
+                  id: Item.id,
+                  itemName: Item.itemName,
+                  priority: Item.priority,
+                  itemType: Item.itemType,
+                  itemPackageType: Item.itemPackageType,
+                  itemPurchesed: false
+                  })
+              }
+            }
+            
+
+          }
+          // alert(localStorage.getItem("items")) 
+          // this.items=localStorage.getItem("items")
+          
         }
     }
 
@@ -76,7 +116,7 @@ export default {
 
 <template
 >
-  <div>
+  <div v-on:load="checkItemList">
     <AppHeader 
     :itemList="reversedItemArr"
     :ishowForm="expandForm"
@@ -197,8 +237,9 @@ export default {
 }
 
 .expanded-input-space{
-  padding: 1.25rem 1rem;
-  margin: 1.5rem auto auto auto;
+  padding: 1.5rem 1rem;
+  /* margin: 1.5rem auto auto auto; */
+  margin-top: 1.5rem;
   border-radius: 3px;
   min-width: 20rem;
   height: 20rem;

@@ -57,8 +57,9 @@ export default {
 .modal-container {
   width: 19rem;
   /* margin: 0px auto; */
-  margin: 1.5rem auto auto auto;
-  padding: 1.25rem 1rem;
+  /* margin: 1.5rem auto auto auto; */
+  margin-top: 1.5rem;
+  padding: 1.5rem 1rem;
   border-style: solid;
   border-color: rgb(0, 88, 4);
   border-width: 0.007pt;
@@ -106,7 +107,7 @@ export default {
   display:flex;
   flex-flow: row-reverse;
   margin-right: -1.124rem;
-  margin-top: -1.312rem;
+  margin-top: -1.48rem;
 }
 
 /*

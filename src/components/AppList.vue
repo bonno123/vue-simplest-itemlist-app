@@ -33,7 +33,7 @@ export default {
     
     <div class="container">
         <div><h4>Existing Items</h4></div>
-              
+            
         <div class="item-list">
                 
             <div class="">
@@ -48,7 +48,7 @@ export default {
                             class="item-list-element-name"
                             v-bind:class="{strikeout: item.itemPurchesed===true, priority: item.priority=='true'}"
                             >
-                                {{item.itemName}} 
+                                {{item.itemName}}
                             </span>
                             
                             <span
@@ -77,19 +77,23 @@ export default {
         
         
     </div>
+    
 
 </template>
 
 <style>
+
+
 .container{
-    margin: 1.5rem auto auto auto;
+    /* margin: 1.5rem 1.5rem 0 0; */
+    margin-top: 1.5rem;
     background: rgb(255 255 255 / 90%);
     /* margin-top: 1.5rem; */
     /* width: 35%; */
     padding: 1rem;
     border-style: solid;
     border-width: 1pt;
-    border-color: blue;
+    border-color: rgb(255, 84, 17);
     /* height: 55vh; */
 
 }
@@ -175,12 +179,20 @@ ul {
 .item-list-element-name{
     /* max-width:10rem; */
     /* width: 9rem; */
-    overflow-wrap: anywhere;
-    overflow: clip;
+    /* overflow-wrap: anywhere; */
+    /* overflow: clip; */
     cursor: pointer;
-}
+    max-width: 95px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-transform:capitalize;
+    /* text-decoration: wavy; */
+    }
 .item-list-element-name:hover{
-    font-size: 1.01em;
+    font-size: 1.005em;
+    text-overflow: clip;
 }
 
 

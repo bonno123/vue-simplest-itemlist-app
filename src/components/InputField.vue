@@ -180,7 +180,7 @@ export default {
     /* display: flex;
     justify-content: end;  */
     float: right;
-    margin: 1.89rem -1.1rem auto auto;
+    margin: 2.15rem -1.07rem auto auto;
   }
 
   /* .input-form{

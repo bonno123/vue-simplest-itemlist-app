@@ -81,30 +81,20 @@ export default{
   </div> -->
 
   <div  class="header-lower">
-    <div
+    
+    
+    <div 
     v-if="this.showForm"
-    class=""
-    >
-      <div class="expanded-input-space">
-        <InputField
-        v-on:newItem="sendNewItemAgain"
-        >
-          <!-- <template #footer-btn >     
-            <AppButton
-            class="app-p-sm "
-            :disabled="isDisabled" 
-            variant="save" 
-            v-on:click="this.$emit('save-signal')"
-            >        
-              Save Item
-            </AppButton>     
-          </template>  -->
-        </InputField>
-        
-      </div>
-
+    class="expanded-input-space">
+      <InputField
+      v-on:newItem="sendNewItemAgain"
+      >
+      </InputField>
+      
     </div>
-    <div>
+    
+
+    <div class="app-list-area">
       <AppList
       :itemListForAppList="itemList"
       v-on:deleteSignal="sendAnotherDeleteSignal"
@@ -112,17 +102,25 @@ export default{
       >
       </AppList>
     </div>
+
+    
     <div 
     v-if="!this.showForm"
     class="logo-container"
-    ><img alt="Vue logo" src="src\assets\logo.png" /></div>
-  </div>
-
-  
+    >
+      <img alt="Vue logo" src="src\assets\logo.png" />
+    </div>
     
+  </div>
+  
 </div>
 </template>
 <style>
+
+
+/*--------slide fade transition------------*/ 
+/*-----------slide fade transition---------*/ 
+
 
 
   .logo-container{
@@ -131,6 +129,7 @@ export default{
     /* height: 354px; */
     width: 362px;
     justify-content: center;
+    transition-delay: .5s;
   }
   .header {
     display: flex;
