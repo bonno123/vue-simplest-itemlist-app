@@ -9,6 +9,7 @@ export default{
   data() {
     return {
         showForm: false,
+        showLogo: true,
         showModal: false
     };
   },
@@ -17,9 +18,21 @@ export default{
   },
   emits: ['editSignal', 'open', 'deleteSignal','togglePurchase', 'newItem'],
   methods: {
-    toggleForm(_value) {
-        this.$emit("editSignal");
-        this.showForm = !this.showForm;
+    toggleForm() {
+        // this.$emit("editSignal");
+        // this.showForm=!this.showForm
+        // this.showLogo=!this.showLogo
+        if(this.showForm==false)
+        {
+          this.showLogo = false/*!this.showLogo*/
+          setTimeout( () => {this.showForm = true/*!this.showForm*/; }, 540); 
+        }
+        else{
+          this.showForm = false/*!this.showForm*/
+          setTimeout( () => {this.showLogo = true/*!this.showLogo*/; }, 10);
+        }
+        
+        
     },
     sendAnotherDeleteSignal(itemId){
       this.$emit('deleteSignal', itemId)
@@ -29,6 +42,9 @@ export default{
     },
     sendNewItemAgain(e){
       this.$emit('newItem', e)
+    },
+    timeOutFunc(){
+      window.setTimeout
     }
 
   },
@@ -71,28 +87,20 @@ export default{
     
   </div>
 
-  <!-- <div class="show-modal-btn">
-    <AppButton
-    id="show-modal"
-    class=" app-p-sm"
-    variant="add-item"
-    @click="$emit('open')"
-    > Add item</AppButton>
-  </div> -->
-
   <div  class="header-lower">
     
-    
-    <div 
-    v-if="this.showForm"
-    class="expanded-input-space">
-      <InputField
-      v-on:newItem="sendNewItemAgain"
+    <Transition name="slide-fade">
+      <div 
+      v-on:load="timeOutFunc"
+      v-if="showForm"
+      class="expanded-input-space"
       >
-      </InputField>
-      
-    </div>
-    
+        <InputField
+        v-on:newItem="sendNewItemAgain"
+        >
+        </InputField>
+      </div>
+    </Transition>
 
     <div class="app-list-area">
       <AppList
@@ -103,14 +111,14 @@ export default{
       </AppList>
     </div>
 
-    
-    <div 
-    v-if="!this.showForm"
-    class="logo-container"
-    >
-      <img alt="Vue logo" src="src\assets\logo.png" />
-    </div>
-    
+    <Transition name="fade">
+      <div 
+      v-if="showLogo"
+      class="logo-container"
+      >
+        <img alt="Vue logo" src="src\assets\logo.png" />
+      </div>
+    </Transition>
   </div>
   
 </div>
@@ -118,7 +126,35 @@ export default{
 <style>
 
 
-/*--------slide fade transition------------*/ 
+/*--------slide fade input form transition------------*/ 
+.slide-fade-enter-active {
+  transition: all 0.09s ease-in;
+  /* transition-delay: 0.5s; */
+
+}
+.slide-fade-leave-active {
+  transition: all .01s ease-out;
+}
+.slide-fade-enter-from, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(-10px);
+  opacity: 0;
+}
+/*--------fade  transition------------*/ 
+.fade-enter-active{
+  transition: all .1s ease-in;
+  /* transition-delay: 0.1s; */
+}
+ .fade-leave-active {
+   transition: all .03s ease-out;
+   /* transition: none; */
+   
+ }
+.fade-enter-from , .fade-leave-to  {
+  opacity: 0;
+  transform: translateX(10px);
+
+}
 /*-----------slide fade transition---------*/ 
 
 

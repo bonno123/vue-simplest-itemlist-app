@@ -39,7 +39,8 @@ export default {
             <div class="">
                 
                 <p v-if="itemListForAppList.length===0">Nice job! no Items are in there</p>
-                <ul>       
+                <!-- <ul> -->
+                    <TransitionGroup name="list" tag="ul">       
                     <li v-for="item in itemListForAppList" :key="(itemListForAppList.length)+1" class="item-list-element">
 
                         <span>
@@ -68,7 +69,8 @@ export default {
                             <AppButton variant="delete" @click="sendDeleteSignal(item.id)"> Delete</AppButton>
                         </span>
                     </li>
-                </ul>
+                </TransitionGroup>
+                <!-- </ul> -->
             </div>
 
         
@@ -82,6 +84,21 @@ export default {
 </template>
 
 <style>
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+}
+
 
 
 .container{
@@ -94,7 +111,8 @@ export default {
     border-style: solid;
     border-width: 1pt;
     border-color: rgb(255, 84, 17);
-    /* height: 55vh; */
+    height: 21rem;
+    
 
 }
 ul {
@@ -111,7 +129,7 @@ ul {
     /* font-size: 1rem; */
     /* color: #3d4852; */
     min-width:20rem;
-    height: 18.107rem;
+    height: 18rem;
     /* overflow: hidden; */
     /* background: orchid; */
     /* padding: 1rem; */

@@ -57,7 +57,7 @@ export default {
 .modal-container {
   width: 19rem;
   /* margin: 0px auto; */
-  /* margin: 1.5rem auto auto auto; */
+  margin: 1.5rem auto auto auto;
   margin-top: 1.5rem;
   padding: 1.5rem 1rem;
   border-style: solid;

@@ -112,15 +112,15 @@ export default {
 </script>
 
 
-
+    <!-- :ishowForm="expandForm"
+    v-on:edit-signal= "editForm"  -->
 
 <template
 >
   <div v-on:load="checkItemList">
     <AppHeader 
     :itemList="reversedItemArr"
-    :ishowForm="expandForm"
-    v-on:edit-signal= "editForm" 
+
     v-on:deleteSignal="removeItem"
     v-on:togglePurchase="togglePurchase"
     v-on:open="openModal" 
