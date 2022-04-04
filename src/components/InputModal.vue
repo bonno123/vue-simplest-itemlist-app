@@ -1,21 +1,12 @@
-<script>
-export default {
-  props: {
-    show: Boolean
-  }
-}
-</script>
-
 <template>
   <Transition name="modal">
     <div v-if="show" class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="close">
-            <button
-            class="modal-default-button"
-            @click="$emit('close')"
-            >X</button>  
+            <button class="modal-default-button" @click="$emit('close')">
+              X
+            </button>
           </div>
           <div class="modal-header">
             <slot name="header">default header</slot>
@@ -35,6 +26,14 @@ export default {
     </div>
   </Transition>
 </template>
+<script>
+export default {
+  props: {
+    show: Boolean,
+  },
+  emits: ["close"],
+};
+</script>
 
 <style>
 .modal-mask {
@@ -56,7 +55,6 @@ export default {
 
 .modal-container {
   width: 19rem;
-  /* margin: 0px auto; */
   margin: 1.5rem auto auto auto;
   margin-top: 1.5rem;
   padding: 1.5rem 1rem;
@@ -81,7 +79,6 @@ export default {
   font-weight: 600;
 }
 .modal-body h4 {
-  /* margin-top: 0; */
   color: #42b952;
 }
 
@@ -90,21 +87,17 @@ export default {
 }
 
 .modal-default-button {
-  /* float: right; */
-  padding: 0.2rem .6rem;
+  padding: 0.2rem 0.6rem;
   font-size: 0.8rem;
   font-weight: bold;
   color: white;
   border-style: none;
   background-color: red;
 }
-.close{
-  
+.close {
   position: relative;
-  /* top: 0; */
-  /* right: 0; */
-  /* font-size: 18px; */
-  display:flex;
+
+  display: flex;
   flex-flow: row-reverse;
   margin-right: -1.124rem;
   margin-top: -1.48rem;
@@ -132,5 +125,4 @@ export default {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
-
 </style>
