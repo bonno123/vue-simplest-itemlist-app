@@ -1,32 +1,33 @@
 <template>
   <div class="header">
     <div class="header-upper">
-      <h1>Shopping List App</h1>
+      <h1>{{ $t("appheader") }}</h1>
       <div class="expand-form-btn">
         <button
           v-if="showForm == false"
           class="custom-btn btn-edit-items"
           @click="toggleForm"
         >
-          <span>Expand Form</span><span>Edit List !</span>
+          <span>{{ $t("buttons.showform.span1") }}</span
+          ><span>{{ $t("buttons.showform.span2") }}</span>
         </button>
         <button
           v-if="showForm == true"
           class="custom-btn btn-edit-cancel"
           @click="toggleForm"
         >
-          <span> Close Edit</span>
+          <span> {{ $t("buttons.closeform") }}</span>
         </button>
       </div>
 
       <div class="show-modal-btn">
-        <AppButton
+        <app-button
           id="show-modal"
           class="app-p-sm"
           variant="add-item"
           @click="$emit('open')"
         >
-          Add item</AppButton
+          {{ $t("buttons.showmodal") }}</app-button
         >
       </div>
     </div>
@@ -34,17 +35,17 @@
     <div class="header-lower">
       <Transition name="slide-fade">
         <div v-if="showForm" class="expanded-input-space" @load="timeOutFunc">
-          <InputField @new-item="sendNewItemAgain"> </InputField>
+          <input-field @new-item="sendNewItemAgain"> </input-field>
         </div>
       </Transition>
 
       <div class="app-list-area">
-        <AppList
+        <app-list
           :item-list-for-app-list="itemList"
           @delete-signal="sendAnotherDeleteSignal"
           @toggle-purchase="sendAnotherTogglePurchaseSignal"
         >
-        </AppList>
+        </app-list>
       </div>
 
       <Transition name="fade">
@@ -145,7 +146,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0rem 1rem 0rem 1rem;
+
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  padding-bottom: 1rem;
+  align-items: center;
 }
 .header-lower {
   display: flex;
@@ -165,11 +171,6 @@ export default {
   div .expand-form-btn,
   .expanded-input-space {
     display: none;
-  }
-  .header-upper {
-    flex-direction: column;
-    align-items: baseline;
-    margin: 0rem auto 0rem auto;
   }
 }
 

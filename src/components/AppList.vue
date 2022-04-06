@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <div><h4>Existing Items</h4></div>
+    <div>
+      <h4>{{ $t("applist-header") }}</h4>
+    </div>
 
     <div class="item-list">
       <div class="">
         <p v-if="itemListForAppList.length === 0">
-          Nice job! no Items are in there
+          {{ $t("applist-empty-message") }}
         </p>
 
-        <TransitionGroup name="list" tag="ul">
+        <transition-group name="list" tag="ul">
           <li
             v-for="item in itemListForAppList"
             :key="item.id"
@@ -30,22 +32,22 @@
                 v-if="item.itemType === 'true' && !item.itemPurchesed"
                 class="label-ebook"
               >
-                {{ itemTypeDict[0] }}
+                {{ $t("item-type-dict.paperback") }}
               </span>
               <span
                 v-if="item.itemType === 'false' && !item.itemPurchesed"
                 class="label-paperback"
               >
-                {{ itemTypeDict[1] }}
+                {{ $t("item-type-dict.ebook") }}
               </span>
             </span>
             <span>
-              <AppButton variant="delete" @click="sendDeleteSignal(item.id)">
-                Delete</AppButton
+              <app-button variant="delete" @click="sendDeleteSignal(item.id)">
+                {{ $t("buttons.deleteitem") }}</app-button
               >
             </span>
           </li>
-        </TransitionGroup>
+        </transition-group>
       </div>
     </div>
   </div>

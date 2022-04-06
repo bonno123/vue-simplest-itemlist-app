@@ -14,35 +14,44 @@
 
     <div class="input-form-priority">
       <label for="id-priority"
-        ><h4 style="margin-right: 1rem">Priority</h4></label
+        ><h4 style="margin-right: 1rem">
+          {{ $t("input-label-priority") }}
+        </h4></label
       >
       <label>
         <select id="id-priority" v-model="newItemPriority">
-          <option value="true">High</option>
-          <option value="false">Low</option>
+          <option value="true">{{ $t("input-priority-options.high") }}</option>
+          <option value="false">
+            {{ $t("input-priority-options.low") }}
+          </option>
         </select>
       </label>
     </div>
     <div>
-      <label for="id-item-type"><h4>Item Type</h4></label>
+      <label for="id-item-type"
+        ><h4>{{ $t("input-label-item-type") }}</h4></label
+      >
 
       <label id="id-item-type">
         <label
-          ><input
-            v-model="newItemType"
-            type="radio"
-            value="true"
-          />Paperback</label
+          ><input v-model="newItemType" type="radio" value="true" />{{
+            $t("input-item-type-options.paperback")
+          }}</label
         >
         <label
-          ><input v-model="newItemType" type="radio" value="false" />E-Book
+          ><input v-model="newItemType" type="radio" value="false" />{{
+            $t("input-item-type-options.ebook")
+          }}
         </label>
       </label>
     </div>
     <div class="input-form-bottom">
       <div>
         <label for="id-pakegging">
-          <h4>Pakegging <span style="color: red; font-size: 18px">*</span></h4>
+          <h4>
+            {{ $t("input-label-packaging") }}
+            <span style="color: red; font-size: 18px">*</span>
+          </h4>
         </label>
 
         <label id="id-pakegging">
@@ -57,7 +66,7 @@
     <div class="save-button-posititon">
       <slot name="footer-btn"></slot>
       <AppButton class="app-p-sm" :disabled="isDisabled" variant="save">
-        Save Item
+        {{ $t("buttons.save-item") }}
       </AppButton>
     </div>
 

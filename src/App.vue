@@ -1,4 +1,6 @@
 <template>
+  <the-nav-bar />
+
   <div @load="checkItemList">
     <AppHeader
       :item-list="reversedItemArr"
@@ -25,16 +27,20 @@
     </div>
   </div>
 </template>
+
 <script>
 import InputField from "./components/InputField.vue";
 import AppHeader from "./components/AppHeader.vue";
 import InputModal from "./components/InputModal.vue";
+// import i18nComp from "./components/i18nComp.vue";
+import TheNavBar from "./components/TheNavBar.vue";
 
 export default {
   components: {
     InputField,
     AppHeader,
     InputModal,
+    TheNavBar,
   },
 
   data() {
@@ -132,7 +138,7 @@ export default {
 
   background: #fff;
   padding: 2rem;
-  margin: 1rem;
+  margin: 4.9rem 1rem 1rem 1rem;
   border-radius: 3px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);
   width: 80%;
