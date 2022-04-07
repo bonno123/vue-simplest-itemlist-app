@@ -1,8 +1,8 @@
 import { createI18n } from "vue-i18n";
-import enTrans from "./locale/en.json";
-import bnTrans from "./locale/bn.json";
+import englishTranslations from "./locale/en.json";
+import bengaliTranslations from "./locale/bn.json";
 
-const messages = { en: enTrans, bn: bnTrans };
+const messages = { en: englishTranslations, bn: bengaliTranslations };
 
 const i18n = createI18n({
   locale: "en", // set locale

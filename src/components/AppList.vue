@@ -88,7 +88,7 @@ export default {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(1.875rem);
 }
 
 .list-leave-active {
@@ -109,7 +109,7 @@ ul {
   padding: 0;
 }
 .container h4 {
-  margin-top: -1px;
+  margin-top: -0.063rem;
 }
 .item-list {
   min-width: 20rem;
@@ -145,7 +145,7 @@ ul {
 
 .item-list-element-name {
   cursor: pointer;
-  max-width: 95px;
+  max-width: 5.938rem;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -160,7 +160,7 @@ ul {
 li span:nth-child(2) {
   margin-top: 0.1rem;
   margin-left: 1rem;
-  letter-spacing: 2px;
+  letter-spacing: 0.125rem;
   display: inline-block;
   font-weight: 900;
   font-size: 0.6rem;
@@ -168,23 +168,23 @@ li span:nth-child(2) {
 
 .strikeout {
   text-decoration: line-through;
-  color: #b8c2cc;
+  color: rgb(184, 194, 204);
 }
 
 .strikeout:hover {
-  color: #8795a1;
+  color: rgb(135, 149, 161);
 }
 
 .priority {
-  color: #de751f;
+  color: rgb(222, 117, 31);
 }
 
 .label-ebook {
-  color: #006ec4;
-  background-color: #0af9c130;
+  color: rgb(0, 110, 196);
+  background-color: rgba(10, 249, 193, 0.188);
 }
 .label-paperback {
   color: rgb(13, 136, 13);
-  background-color: #4cf0003a;
+  background-color: rgba(76, 240, 0, 0.227);
 }
 </style>

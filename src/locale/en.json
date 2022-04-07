@@ -16,6 +16,7 @@
         "ebook":"ebook",
         "paperback":"paperback"
     },
+    "input-placeholder": "Enter a new Item",
     "input-label-priority":"Priority",
     "input-priority-options":{
         "high":"high",

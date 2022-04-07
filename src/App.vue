@@ -1,5 +1,5 @@
 <template>
-  <the-nav-bar />
+  <app-nav-bar />
 
   <div @load="checkItemList">
     <AppHeader
@@ -32,15 +32,14 @@
 import InputField from "./components/InputField.vue";
 import AppHeader from "./components/AppHeader.vue";
 import InputModal from "./components/InputModal.vue";
-// import i18nComp from "./components/i18nComp.vue";
-import TheNavBar from "./components/TheNavBar.vue";
+import AppNavBar from "./components/AppNavBar.vue";
 
 export default {
   components: {
     InputField,
     AppHeader,
     InputModal,
-    TheNavBar,
+    AppNavBar,
   },
 
   data() {
@@ -48,7 +47,6 @@ export default {
       set_id: 1,
       expandForm: false,
       showModal: false,
-
       items: [],
     };
   },
@@ -133,16 +131,14 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   color: #2c3e50;
-
   background: #fff;
-  padding: 2rem;
-  margin: 4.9rem 1rem 1rem 1rem;
-  border-radius: 3px;
+  padding: 1rem 2rem 1rem 2rem;
+  margin: 5.3rem 1rem 1rem 1rem;
+  border-radius: 0.188rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);
   width: 80%;
-  max-width: 900px;
+  max-width: 56.25rem;
 }
 
 .expanded-app-items {
@@ -155,18 +151,5 @@ export default {
 }
 .app-p-sm {
   padding: 0.5rem 0.75rem;
-}
-
-.expanded-input-space {
-  padding: 1.5rem 1rem;
-
-  margin-top: 1.5rem;
-  border-radius: 3px;
-  min-width: 20rem;
-  height: 20rem;
-
-  border-style: solid;
-  border-width: 0.007pt;
-  border-color: chartreuse;
 }
 </style>

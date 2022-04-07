@@ -1,12 +1,10 @@
 <template>
   <Transition name="modal">
     <div v-if="show" class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="close">
-            <button class="modal-default-button" @click="$emit('close')">
-              X
-            </button>
+      <div class="modal-wrapper" @click="$emit('close')">
+        <div class="modal-container" :class="size" @click.stop="">
+          <div class="close" @click="$emit('close')">
+            <button class="modal-default-button">X</button>
           </div>
           <div class="modal-header">
             <slot name="header">default header</slot>
@@ -31,7 +29,7 @@ export default {
   props: {
     show: Boolean,
   },
-  emits: ["close"],
+  emits: [close],
 };
 </script>
 
@@ -61,25 +59,25 @@ export default {
   border-style: solid;
   border-color: rgb(0, 88, 4);
   border-width: 0.007pt;
-  background-color: #fff;
-  border-radius: 2px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.125rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
 }
 
 .modal-header h3 {
   margin-top: 0;
-  color: #b94266;
+  color: rgb(185, 66, 102);
   display: none;
 }
 
 .modal-body {
-  margin: 20px 0;
-  color: #b94266;
+  margin: 1.25rem 0;
+  color: rgb(185, 66, 102);
   font-weight: 600;
 }
 .modal-body h4 {
-  color: #42b952;
+  color: rgb(66, 185, 82);
 }
 
 .modal-footer {
@@ -90,17 +88,17 @@ export default {
   padding: 0.2rem 0.6rem;
   font-size: 0.8rem;
   font-weight: bold;
-  color: white;
+  color: rgb(255, 255, 255);
   border-style: none;
-  background-color: red;
+  background-color: rgb(255, 0, 0);
 }
 .close {
   position: relative;
 
   display: flex;
   flex-flow: row-reverse;
-  margin-right: -1.124rem;
-  margin-top: -1.48rem;
+  margin-right: -1rem;
+  margin-top: -1.5rem;
 }
 
 /*

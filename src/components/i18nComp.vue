@@ -1,8 +1,4 @@
 <template>
-  <!-- <div>
-    <button @click="setLocale('en')">english</button>
-    <button @click="setLocale('bn')">Bengali</button>
-  </div> -->
   <div class="lang-change">
     <span :class="{ active: !localeValue }">EN</span
     ><label class="switch">
@@ -44,8 +40,8 @@ export default {
 .switch {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 24px;
+  width: 3.125rem;
+  height: 1.5rem;
 }
 
 .switch input {
@@ -61,7 +57,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #fff;
+  background: rgb(255, 255, 255);
   transition: 0.4s;
   border-radius: 50%;
   box-shadow: -1px 1px 6px 0px rgba(0, 0, 0, 0.68);
@@ -70,25 +66,25 @@ export default {
 .slider:before {
   content: "";
   position: absolute;
-  height: 19.5px;
-  width: 19.5px;
-  background: #656464e8;
-  left: 5px;
-  bottom: 2.5px;
-  border-radius: 50px;
+  height: 1.219rem;
+  width: 1.219rem;
+  background: rgba(101, 100, 100, 0.91);
+  left: 0.313rem;
+  bottom: 0.156rem;
+  border-radius: 3.125;
   transition: 0.3s cubic-bezier(0.42, 0, 0, 1.68);
 }
 
 input:checked + .slider {
-  background-color: #2196f3;
+  background-color: rgb(33, 150, 243);
 }
 
 input:checked + .slider:before {
-  transform: translateX(19px);
-  background: yellow;
+  transform: translateX(1.118rem);
+  background: rgb(255, 255, 0);
 }
 
 input:checked + span {
-  color: yellowgreen;
+  color: rgb(154, 205, 50);
 }
 </style>

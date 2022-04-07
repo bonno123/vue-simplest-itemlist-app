@@ -6,7 +6,7 @@
             "span2": "তালিকাভুক্ত-করণ !"
         },
         "closeform":"সম্পাদনা বন্ধ",
-        "showmodal":"নতুন আইটেম যোগ",
+        "showmodal":"আইটেম যোগ",
         "deleteitem":"অপসারণ",
         "save-item": "তালিকায়- যোগ"
     },
@@ -16,6 +16,7 @@
         "ebook":"ই-বই",
         "paperback":"মলাট-বই"
     },
+    "input-placeholder": "একটি নতুন আইটেম লিখুন",
     "input-label-priority":"জরুরী",
     "input-priority-options":{
         "high":"হ্যাঁ",

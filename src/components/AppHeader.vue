@@ -27,14 +27,14 @@
           variant="add-item"
           @click="$emit('open')"
         >
-          {{ $t("buttons.showmodal") }}</app-button
-        >
+          {{ $t("buttons.showmodal") }}
+        </app-button>
       </div>
     </div>
 
     <div class="header-lower">
       <Transition name="slide-fade">
-        <div v-if="showForm" class="expanded-input-space" @load="timeOutFunc">
+        <div v-if="showForm" class="expanded-input-space">
           <input-field @new-item="sendNewItemAgain"> </input-field>
         </div>
       </Transition>
@@ -97,9 +97,6 @@ export default {
     sendNewItemAgain(e) {
       this.$emit("newItem", e);
     },
-    timeOutFunc() {
-      window.setTimeout;
-    },
   },
 };
 </script>
@@ -113,7 +110,7 @@ export default {
 }
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(-10px);
+  transform: translateX(-0.625rem);
   opacity: 0;
 }
 
@@ -126,31 +123,30 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  transform: translateX(10px);
+  transform: translateX(0.625rem);
 }
 
 .logo-container {
   display: flex;
   align-self: center;
 
-  width: 362px;
+  width: 22.625rem;
   justify-content: center;
   transition-delay: 0.5s;
 }
 .header {
   display: flex;
   flex-flow: column;
-  margin: 2rem 3rem 2rem 3rem;
+  margin: 0rem 3rem 0.5rem 3rem;
 }
 .header-upper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  height: 6.313rem;
   position: sticky;
   z-index: 2;
   top: 0;
-  padding-bottom: 1rem;
   align-items: center;
 }
 .header-lower {
@@ -159,18 +155,54 @@ export default {
   justify-content: space-around;
   flex-wrap: wrap;
   margin: 0rem;
-  min-height: 40vh;
+  height: 25rem;
+}
+.expanded-input-space {
+  padding: 1.5rem 1rem;
+  margin-top: 1.5rem;
+  border-radius: 0.188;
+  width: 20rem;
+  height: 20rem;
+  border-style: solid;
+  border-width: 0.007pt;
+  border-color: rgb(128, 255, 0);
+  overflow: hidden;
+}
+#id-pakegging {
+  display: flex;
+  flex-flow: wrap;
 }
 
-@media screen and (min-width: 1044px) {
+@media screen and (min-width: 65.25rem) {
   div .show-modal-btn {
     display: none;
   }
 }
-@media screen and (max-width: 1044px) {
+@media screen and (max-width: 65.25rem) {
   div .expand-form-btn,
   .expanded-input-space {
     display: none;
+  }
+  .header-upper > h1 {
+    margin-left: -4rem;
+    padding-top: 0;
+    max-width: 13rem;
+  }
+  .header-upper {
+    align-content: flex-start;
+    align-items: last baseline;
+    background: rgba(255, 255, 255, 0)
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 10%,
+        rgba(255, 255, 255, 0.1) 40%,
+        rgba(255, 255, 255, 0.5) 75%,
+        rgba(255, 255, 255, 1) 100%
+      )
+      repeat scroll 0 0;
+  }
+  .header-lower {
+    height: 35rem;
   }
 }
 
@@ -179,7 +211,7 @@ export default {
 .custom-btn {
   width: 130px;
   height: 40px;
-  color: #fff;
+  color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 10px 25px;
   font-family: "Lato", sans-serif;
@@ -229,8 +261,9 @@ export default {
   transition: all 0.3s;
 }
 .btn-edit-items span:nth-child(1) {
-  box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9,
-    7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
+  box-shadow: -7px -7px 20px 0px rgba(255, 255, 255, 0.6),
+    -4px -4px 5px 0px rgba(255, 255, 255, 0.6),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.133), 4px 4px 5px 0px rgba(0, 0, 0, 0.067);
   -webkit-transform: rotateX(90deg);
   -moz-transform: rotateX(90deg);
   transform: rotateX(90deg);
