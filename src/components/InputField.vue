@@ -5,7 +5,7 @@
         <input
           v-model="newItem"
           type="text"
-          placeholder="Enter new Item"
+          :placeholder="$t('input-placeholder')"
           maxlength="50"
         />
         <p class="counter">{{ charcount }}</p>
@@ -13,129 +13,126 @@
     </div>
 
     <div class="input-form-priority">
-      <label for="id-priority"
-        ><h4 style="margin-right: 1rem">Priority</h4></label
-      >
+      <label for="id-priority">
+        <h4 style="margin-right: 1rem">
+          {{ $t("input-label-priority") }}
+        </h4>
+      </label>
       <label>
         <select id="id-priority" v-model="newItemPriority">
-          <option value="true">High</option>
-          <option value="false">Low</option>
+          <option value="true">{{ $t("input-priority-options.high") }}</option>
+          <option value="false">
+            {{ $t("input-priority-options.low") }}
+          </option>
         </select>
       </label>
     </div>
     <div>
-      <label for="id-item-type"><h4>Item Type</h4></label>
+      <label for="id-item-type">
+        <h4>{{ $t("input-label-item-type") }}</h4>
+      </label>
 
       <label id="id-item-type">
-        <label
-          ><input
-            v-model="newItemType"
-            type="radio"
-            value="true"
-          />Paperback</label
-        >
-        <label
-          ><input v-model="newItemType" type="radio" value="false" />E-Book
+        <label>
+          <input v-model="newItemType" type="radio" value="true" />
+          {{ $t("input-item-type-options.paperback") }}
+        </label>
+
+        <label>
+          <input v-model="newItemType" type="radio" value="false" />
+          {{ $t("input-item-type-options.ebook") }}
         </label>
       </label>
     </div>
     <div class="input-form-bottom">
-      <div>
-        <label for="id-pakegging">
-          <h4>Pakegging <span style="color: red; font-size: 18px">*</span></h4>
-        </label>
+      <label for="id-pakegging">
+        <h4>
+          {{ $t("input-label-packaging") }}
+          <span>*</span>
+        </h4>
+      </label>
 
-        <label id="id-pakegging">
-          <label v-for="i in itemPackageTypeDict" :key="i.id">
-            <input :id="i" type="checkbox" @click="sinkItemPackageType(i)" />
-            {{ i }}
-          </label>
+      <label id="id-pakegging">
+        <label v-for="i in itemPackageTypeDict" :key="i.id">
+          <input :id="i" type="checkbox" @click="sinkItemPackageType(i)" />
+          {{ $t("input-packaging-options.check1") }}
         </label>
-      </div>
+      </label>
     </div>
 
     <div class="save-button-posititon">
       <slot name="footer-btn"></slot>
       <AppButton class="app-p-sm" :disabled="isDisabled" variant="save">
-        Save Item
+        {{ $t("buttons.save-item") }}
       </AppButton>
     </div>
 
     {{ newItem.length }} {{ newItemPackageType }}
   </form>
 </template>
-<script>
+
+<script setup>
+import { computed } from "@vue/reactivity";
+import { ref } from "vue";
 import AppButton from "./AppButton.vue";
+const emit = defineEmits(["newItem"]);
 
-export default {
-  components: {
-    AppButton,
-  },
-  emits: ["newItem"],
-  data() {
-    return {
-      newItem: "",
-      newItemPriority: "false",
-      newItemType: "true",
-      newItemPackageType: "",
+const newItem = ref("");
+const newItemPriority = ref(false);
+const newItemType = ref("true");
+const newItemPackageType = ref("");
 
-      itemPackageTypeDict: ["check1", "check2", "check3", "check4"],
-    };
-  },
-  computed: {
-    charcount() {
-      return 50 - this.newItem.length;
-    },
-    isDisabled() {
-      return this.newItem.length < 5 || this.newItemPackageType.length == 0;
-    },
-  },
-  methods: {
-    sendNewItem() {
-      if (this.newItem.length >= 5 && this.newItemPackageType.length != 0) {
-        this.$emit("newItem", {
-          itemName: this.newItem,
-          priority: this.newItemPriority,
-          itemType: this.newItemType,
-          itemPackageType: this.newItemPackageType,
-        }),
-          (this.newItem = "");
-        this.newItemPriority = "false";
-        this.newItemType = "true";
-        document.getElementById(this.newItemPackageType).checked = false;
-        this.newItemPackageType = "";
-      }
-    },
+const itemPackageTypeDict = ref(["check1", "check2", "check3", "check4"]);
 
-    sinkItemPackageType(packtype) {
-      var sum_checked = false;
+const charcount = computed(() => {
+  return 50 - newItem.value.length;
+});
 
-      for (let i in this.itemPackageTypeDict) {
-        sum_checked =
-          sum_checked ||
-          document.getElementById(this.itemPackageTypeDict[i]).checked;
-      }
-      if (sum_checked == false) {
-        this.newItemPackageType = "";
-      } else {
-        this.newItemPackageType = packtype;
-        for (let i in this.itemPackageTypeDict) {
-          if (packtype != this.itemPackageTypeDict[i]) {
-            document.getElementById(
-              this.itemPackageTypeDict[i]
-            ).checked = false;
-          }
+const isDisabled = computed(() => {
+  return newItem.value.length < 4 || newItemPackageType.value.length == 0;
+});
+
+function sendNewItem() {
+  if (newItem.value.length >= 4 && newItemPackageType.value.length != 0) {
+    emit("newItem", {
+      itemName: newItem.value,
+      priority: newItemPriority.value,
+      itemType: newItemType.value,
+      itemPackageType: newItemPackageType.value,
+    }),
+      (newItem.value = "");
+    newItemPriority.value = false;
+    newItemType.value = "true";
+    document.getElementById(newItemPackageType.value).checked = false;
+    newItemPackageType.value = "";
+  }
+}
+
+function sinkItemPackageType(packtype) {
+  var sum_checked = false;
+
+  for (let i in itemPackageTypeDict.value) {
+    sum_checked =
+      sum_checked ||
+      document.getElementById(itemPackageTypeDict.value[i]).checked;
+    if (sum_checked == false) {
+      newItemPackageType.value = "";
+    } else {
+      newItemPackageType.value = packtype;
+      for (let i in itemPackageTypeDict.value) {
+        if (packtype != itemPackageTypeDict.value[i]) {
+          document.getElementById(itemPackageTypeDict.value[i]).checked = false;
         }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style>
 .save-button-posititon {
   float: right;
-  margin: 2.15rem -1.07rem auto auto;
+  margin: 0.5rem -1.07rem auto auto;
 }
 
 .input-field {
@@ -147,8 +144,7 @@ export default {
 
 .counter {
   font-size: 0.8rem;
-
-  padding: 5px 8px;
+  padding: 0.313rem 0.5rem;
   border-style: solid;
   border-color: rgba(64, 0, 82, 0.28);
   border-width: 1pt;
@@ -157,18 +153,22 @@ export default {
 
 .input-field input {
   width: 85%;
-  border-radius: 3px;
+  border-radius: 0.188;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid #f1f5f8;
-  color: #606f7b;
+  border: 0.063 solid rgb(241, 245, 248);
+  color: rgb(99, 117, 132);
   padding: 0.5rem 0.75rem;
-
   font-size: 1rem;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.031rem;
 }
 
 .input-form-priority {
   display: flex;
   align-items: center;
+}
+.input-form-bottom :first-child > span {
+  /* display: flex wrap; */
+  color: rgb(255, 0, 0);
+  font-size: 1.125rem;
 }
 </style>

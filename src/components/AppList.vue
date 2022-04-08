@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <div><h4>Existing Items</h4></div>
+    <div>
+      <h4>{{ $t("applist-header") }}</h4>
+    </div>
 
     <div class="item-list">
       <div class="">
         <p v-if="itemListForAppList.length === 0">
-          Nice job! no Items are in there
+          {{ $t("applist-empty-message") }}
         </p>
 
-        <TransitionGroup name="list" tag="ul">
+        <transition-group name="list" tag="ul">
           <li
             v-for="item in itemListForAppList"
             :key="item.id"
@@ -18,8 +20,8 @@
               <span
                 class="item-list-element-name"
                 :class="{
-                  strikeout: item.itemPurchesed === true,
-                  priority: item.priority == 'true',
+                  strikeout: item.itemPurchesed,
+                  priority: item.priority === 'true',
                 }"
                 @click="sendTogglePurchaseSignal(item.id)"
               >
@@ -27,55 +29,46 @@
               </span>
 
               <span
-                v-if="item.itemType === 'true' && !item.itemPurchesed"
+                v-if="item.itemType == 'true' && !item.itemPurchesed"
                 class="label-ebook"
               >
-                {{ itemTypeDict[0] }}
+                {{ $t("item-type-dict.paperback") }}
               </span>
               <span
                 v-if="item.itemType === 'false' && !item.itemPurchesed"
                 class="label-paperback"
               >
-                {{ itemTypeDict[1] }}
+                {{ $t("item-type-dict.ebook") }}
               </span>
             </span>
             <span>
-              <AppButton variant="delete" @click="sendDeleteSignal(item.id)">
-                Delete</AppButton
+              <app-button variant="delete" @click="sendDeleteSignal(item.id)">
+                {{ $t("buttons.deleteitem") }}</app-button
               >
             </span>
           </li>
-        </TransitionGroup>
+        </transition-group>
       </div>
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import { ref } from "vue";
 import AppButton from "./AppButton.vue";
 
-export default {
-  components: {
-    AppButton,
-  },
-  props: {
-    itemListForAppList: { type: Array, required: true },
-  },
-  emits: ["deleteSignal", "togglePurchase"],
-  data() {
-    return {
-      itemTypeDict: ["Paperback", "ebook"],
-    };
-  },
+const props = defineProps({
+  itemListForAppList: { type: Array, required: true },
+});
+const emit = defineEmits(["deleteSignal", "togglePurchase"]);
 
-  methods: {
-    sendDeleteSignal(itemId) {
-      this.$emit("deleteSignal", itemId);
-    },
-    sendTogglePurchaseSignal(itemId) {
-      this.$emit("togglePurchase", itemId);
-    },
-  },
-};
+const itemTypeDict = ref(["Paperback", "ebook"]);
+
+function sendDeleteSignal(itemId) {
+  emit("deleteSignal", itemId);
+}
+function sendTogglePurchaseSignal(itemId) {
+  emit("togglePurchase", itemId);
+}
 </script>
 
 <style>
@@ -86,7 +79,7 @@ export default {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(1.875rem);
 }
 
 .list-leave-active {
@@ -107,7 +100,7 @@ ul {
   padding: 0;
 }
 .container h4 {
-  margin-top: -1px;
+  margin-top: -0.063rem;
 }
 .item-list {
   min-width: 20rem;
@@ -143,7 +136,7 @@ ul {
 
 .item-list-element-name {
   cursor: pointer;
-  max-width: 95px;
+  max-width: 5.938rem;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -158,7 +151,7 @@ ul {
 li span:nth-child(2) {
   margin-top: 0.1rem;
   margin-left: 1rem;
-  letter-spacing: 2px;
+  letter-spacing: 0.125rem;
   display: inline-block;
   font-weight: 900;
   font-size: 0.6rem;
@@ -166,23 +159,23 @@ li span:nth-child(2) {
 
 .strikeout {
   text-decoration: line-through;
-  color: #b8c2cc;
+  color: rgb(184, 194, 204);
 }
 
 .strikeout:hover {
-  color: #8795a1;
+  color: rgb(135, 149, 161);
 }
 
 .priority {
-  color: #de751f;
+  color: rgb(222, 117, 31);
 }
 
 .label-ebook {
-  color: #006ec4;
-  background-color: #0af9c130;
+  color: rgb(0, 110, 196);
+  background-color: rgba(10, 249, 193, 0.188);
 }
 .label-paperback {
   color: rgb(13, 136, 13);
-  background-color: #4cf0003a;
+  background-color: rgba(76, 240, 0, 0.227);
 }
 </style>

@@ -1,0 +1,38 @@
+{
+    "appheader":"Shopping List App",
+    "buttons":{
+        "showform":{
+            "span1":"Expand Form",
+            "span2": "Edit List !"
+        },
+        "closeform":"Close Edit",
+        "showmodal":"Add Item",
+        "deleteitem":"Delete",
+        "save-item": "Save Item"
+    },
+    "applist-header":"Existing Items",
+    "applist-empty-message":"Nice job! no Items are in there",
+    "item-type-dict":{
+        "ebook":"ebook",
+        "paperback":"paperback"
+    },
+    "input-placeholder": "Enter a new Item",
+    "input-label-priority":"Priority",
+    "input-priority-options":{
+        "high":"high",
+        "low":"low"
+    },
+    "input-label-item-type":"Item Type",
+    "input-item-type-options":{
+        "ebook":"Ebook",
+        "paperback":"Paperback"
+    },
+    "input-label-packaging":"Packaging",
+    "input-packaging-options":{
+        "check1":"personal",
+        "check2":"wedding",
+        "check3":"birthday",
+        "check4":"surprise"
+        
+    }
+}

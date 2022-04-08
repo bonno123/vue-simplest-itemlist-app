@@ -1,0 +1,39 @@
+{
+    "appheader":"কেনাকাটার তালিকা-করণ",
+    "buttons":{
+        "showform":{
+            "span1":"ফর্ম সম্প্রসারণ",
+            "span2": "তালিকাভুক্ত-করণ !"
+        },
+        "closeform":"সম্পাদনা বন্ধ",
+        "showmodal":"আইটেম যোগ",
+        "deleteitem":"অপসারণ",
+        "save-item": "তালিকায়- যোগ"
+    },
+    "applist-header":" বিদ্যমান আইটেমগুলি",
+    "applist-empty-message":"সাবাশ!  তালিকা পুরো খালি",
+    "item-type-dict":{
+        "ebook":"ই-বই",
+        "paperback":"মলাট-বই"
+    },
+    "input-placeholder": "একটি নতুন আইটেম লিখুন",
+    "input-label-priority":"জরুরী",
+    "input-priority-options":{
+        "high":"হ্যাঁ",
+        "low":"না"
+    },
+    "input-label-item-type":"আইটেম ধরন",
+    "input-item-type-options":{
+        "ebook":"ই-বই",
+        "paperback":"মলাট-বই"
+    },
+    "input-label-packaging":"মোড়ক",
+    "input-packaging-options":{
+        "check1":"নিজস্ব",
+        "check2":"বিবাহ",
+        "check3":"জন্মদিন",
+        "check4":"চমকপ্রদ"
+        
+    }
+    
+}

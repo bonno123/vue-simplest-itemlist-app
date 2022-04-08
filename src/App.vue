@@ -1,8 +1,10 @@
 <template>
+  <app-nav-bar />
+
   <div @load="checkItemList">
-    <AppHeader
+    <app-header
       :item-list="reversedItemArr"
-      @delete-signal="removeItem"
+      @delete-signal="removeItem(e)"
       @toggle-purchase="togglePurchase"
       @open="openModal"
       @new-item="addItem"
@@ -25,101 +27,84 @@
     </div>
   </div>
 </template>
-<script>
+
+<script setup>
+import { computed, onMounted, ref } from "vue";
+
 import InputField from "./components/InputField.vue";
 import AppHeader from "./components/AppHeader.vue";
 import InputModal from "./components/InputModal.vue";
+import AppNavBar from "./components/AppNavBar.vue";
 
-export default {
-  components: {
-    InputField,
-    AppHeader,
-    InputModal,
-  },
+const set_id = ref(1);
+// const expandForm = ref(false);
+const showModal = ref(false);
+const items = ref([]);
 
-  data() {
-    return {
-      set_id: 1,
-      expandForm: false,
-      showModal: false,
+function addItem(e) {
+  let newItem = {
+    id: set_id.value++,
+    itemName: e.itemName,
+    priority: e.priority,
+    itemType: e.itemType,
+    itemPackageType: e.itemPackageType,
+    itemPurchesed: false,
+  };
+  items.value.push(newItem);
+  localStorage.setItem(newItem.id, JSON.stringify(newItem));
+}
 
-      items: [],
-    };
-  },
-  computed: {
-    filterPurchasedItems() {
-      return [...this.items].filter((item) => !item.itemPurchesed);
-    },
-    reversedItemArr() {
-      return [...this.items].reverse();
-    },
-  },
-  mounted() {
-    this.checkItemList();
-  },
-  methods: {
-    addItem(e) {
-      let newItem = {
-        id: this.set_id++,
-        itemName: e.itemName,
-        priority: e.priority,
-        itemType: e.itemType,
-        itemPackageType: e.itemPackageType,
-        itemPurchesed: false,
-      };
-      this.items.push(newItem);
-      localStorage.setItem(newItem.id, JSON.stringify(newItem));
-    },
-    removeItem(e) {
-      this.items.splice(
-        this.items.findIndex((x) => x.id === e),
-        1
-      );
-      localStorage.removeItem(e);
-    },
-    editForm() {
-      this.expandForm = !this.expandForm;
-    },
-    togglePurchase(e) {
-      this.items.find((x) => x.id === e).itemPurchesed = !this.items.find(
-        (x) => x.id === e
-      ).itemPurchesed;
-      localStorage.setItem(
-        e,
-        JSON.stringify(this.items.find((x) => x.id === e))
-      );
-    },
-    openModal() {
-      this.showModal = true;
-    },
-    checkItemList() {
-      if (localStorage.length > 0) {
-        this.items = [];
-        const key_list = [];
-        for (let i = 0; i < localStorage.length; i++) {
-          var Item = JSON.parse(localStorage.getItem(localStorage.key(i)));
-          key_list.push(Item.id);
+function removeItem(e) {
+  items.value.splice(
+    items.value.findIndex((x) => x.id === e),
+    1
+  );
+  localStorage.removeItem(e);
+}
 
-          if (Item.id != null) {
-            this.items.push({
-              id: Item.id,
-              itemName: Item.itemName,
-              priority: Item.priority,
-              itemType: Item.itemType,
-              itemPackageType: Item.itemPackageType,
-              itemPurchesed: Item.itemPurchesed,
-            });
-          }
-        }
-        this.set_id = Math.max(...key_list) + 1;
-      } else {
-        for (let i = 0; i < this.items.length; i++) {
-          localStorage.setItem(this.items[i].id, JSON.stringify(this.items[i]));
-        }
+function togglePurchase(e) {
+  items.value.find((x) => x.id === e).itemPurchesed = !items.value.find(
+    (x) => x.id === e
+  ).itemPurchesed;
+  localStorage.setItem(e, JSON.stringify(items.value.find((x) => x.id === e)));
+}
+function openModal() {
+  showModal.value = true;
+}
+
+function checkItemList() {
+  if (localStorage.length > 0) {
+    // const items = ref([]);
+    const key_list = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      var Item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      key_list.push(Item.id);
+      if (Item.id != null) {
+        items.value.push({
+          id: Item.id,
+          itemName: Item.itemName,
+          priority: Item.priority,
+          itemType: Item.itemType,
+          itemPackageType: Item.itemPackageType,
+          itemPurchesed: Item.itemPurchesed,
+        });
       }
-    },
-  },
-};
+    }
+    set_id.value = Math.max(...key_list) + 1;
+  } else {
+    for (let i = 0; i < items.value.length; i++) {
+      localStorage.setItem(items[i].id, JSON.stringify(items[i]));
+    }
+  }
+}
+
+const reversedItemArr = computed(() => {
+  return [...items.value].reverse();
+});
+
+onMounted(() => {
+  checkItemList();
+});
 </script>
 
 <style>
@@ -127,16 +112,14 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   color: #2c3e50;
-
   background: #fff;
-  padding: 2rem;
-  margin: 1rem;
-  border-radius: 3px;
+  padding: 1rem 2rem 1rem 2rem;
+  margin: 5.3rem 1rem 1rem 1rem;
+  border-radius: 0.188rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);
   width: 80%;
-  max-width: 900px;
+  max-width: 56.25rem;
 }
 
 .expanded-app-items {
@@ -149,18 +132,5 @@ export default {
 }
 .app-p-sm {
   padding: 0.5rem 0.75rem;
-}
-
-.expanded-input-space {
-  padding: 1.5rem 1rem;
-
-  margin-top: 1.5rem;
-  border-radius: 3px;
-  min-width: 20rem;
-  height: 20rem;
-
-  border-style: solid;
-  border-width: 0.007pt;
-  border-color: chartreuse;
 }
 </style>

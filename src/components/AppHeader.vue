@@ -1,50 +1,51 @@
 <template>
   <div class="header">
     <div class="header-upper">
-      <h1>Shopping List App</h1>
+      <h1>{{ $t("appheader") }}</h1>
       <div class="expand-form-btn">
         <button
           v-if="showForm == false"
           class="custom-btn btn-edit-items"
           @click="toggleForm"
         >
-          <span>Expand Form</span><span>Edit List !</span>
+          <span>{{ $t("buttons.showform.span1") }}</span
+          ><span>{{ $t("buttons.showform.span2") }}</span>
         </button>
         <button
           v-if="showForm == true"
           class="custom-btn btn-edit-cancel"
           @click="toggleForm"
         >
-          <span> Close Edit</span>
+          <span> {{ $t("buttons.closeform") }}</span>
         </button>
       </div>
 
       <div class="show-modal-btn">
-        <AppButton
+        <app-button
           id="show-modal"
           class="app-p-sm"
           variant="add-item"
-          @click="$emit('open')"
+          @click="emit('open')"
         >
-          Add item</AppButton
-        >
+          {{ $t("buttons.showmodal") }}
+        </app-button>
       </div>
     </div>
 
     <div class="header-lower">
       <Transition name="slide-fade">
-        <div v-if="showForm" class="expanded-input-space" @load="timeOutFunc">
-          <InputField @new-item="sendNewItemAgain"> </InputField>
+        <div v-if="showForm" class="expanded-input-space">
+          <input-field @new-item="sendNewItemAgain"> </input-field>
         </div>
       </Transition>
 
       <div class="app-list-area">
-        <AppList
+        <app-list
           :item-list-for-app-list="itemList"
           @delete-signal="sendAnotherDeleteSignal"
           @toggle-purchase="sendAnotherTogglePurchaseSignal"
         >
-        </AppList>
+        </app-list>
       </div>
 
       <Transition name="fade">
@@ -55,52 +56,48 @@
     </div>
   </div>
 </template>
-<script>
+
+<script setup>
+import { ref } from "vue";
+
 import AppList from "./AppList.vue";
 import AppButton from "./AppButton.vue";
 import InputField from "./InputField.vue";
 
-export default {
-  components: { AppList, AppButton, InputField },
-  props: {
-    itemList: { type: Array, required: true },
-  },
-  emits: ["editSignal", "open", "deleteSignal", "togglePurchase", "newItem"],
-  data() {
-    return {
-      showForm: false,
-      showLogo: true,
-      showModal: false,
-    };
-  },
-  methods: {
-    toggleForm() {
-      if (this.showForm == false) {
-        this.showLogo = !this.showLogo;
-        setTimeout(() => {
-          this.showForm = !this.showForm;
-        }, 540);
-      } else {
-        this.showForm = !this.showForm;
-        setTimeout(() => {
-          this.showLogo = !this.showLogo;
-        }, 10);
-      }
-    },
-    sendAnotherDeleteSignal(itemId) {
-      this.$emit("deleteSignal", itemId);
-    },
-    sendAnotherTogglePurchaseSignal(itemId) {
-      this.$emit("togglePurchase", itemId);
-    },
-    sendNewItemAgain(e) {
-      this.$emit("newItem", e);
-    },
-    timeOutFunc() {
-      window.setTimeout;
-    },
-  },
-};
+const emit = defineEmits(["deleteSignal", "togglePurchase", "newItem", "open"]);
+const props = defineProps({
+  itemList: { type: Array, required: true },
+});
+
+const showForm = ref(false);
+const showLogo = ref(true);
+// const showModal = ref(false);
+
+function toggleForm() {
+  if (showForm.value) {
+    showForm.value = !showForm.value;
+    setTimeout(() => {
+      showLogo.value = !showLogo.value;
+    }, 10);
+  } else {
+    showLogo.value = !showLogo.value;
+    setTimeout(() => {
+      showForm.value = !showForm.value;
+    }, 540);
+  }
+}
+
+function sendAnotherDeleteSignal(itemId) {
+  emit("deleteSignal", itemId);
+}
+
+function sendAnotherTogglePurchaseSignal(itemId) {
+  emit("togglePurchase", itemId);
+}
+
+function sendNewItemAgain(e) {
+  emit("newItem", e);
+}
 </script>
 
 <style>
@@ -112,7 +109,7 @@ export default {
 }
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(-10px);
+  transform: translateX(-0.625rem);
   opacity: 0;
 }
 
@@ -125,27 +122,31 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  transform: translateX(10px);
+  transform: translateX(0.625rem);
 }
 
 .logo-container {
   display: flex;
   align-self: center;
 
-  width: 362px;
+  width: 22.625rem;
   justify-content: center;
   transition-delay: 0.5s;
 }
 .header {
   display: flex;
   flex-flow: column;
-  margin: 2rem 3rem 2rem 3rem;
+  margin: 0rem 3rem 0.5rem 3rem;
 }
 .header-upper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0rem 1rem 0rem 1rem;
+  height: 6.313rem;
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  align-items: center;
 }
 .header-lower {
   display: flex;
@@ -153,23 +154,54 @@ export default {
   justify-content: space-around;
   flex-wrap: wrap;
   margin: 0rem;
-  min-height: 40vh;
+  height: 25rem;
+}
+.expanded-input-space {
+  padding: 1.5rem 1rem;
+  margin-top: 1.5rem;
+  border-radius: 0.188;
+  width: 20rem;
+  height: 20rem;
+  border-style: solid;
+  border-width: 0.007pt;
+  border-color: rgb(128, 255, 0);
+  overflow: hidden;
+}
+#id-pakegging {
+  display: flex;
+  flex-flow: wrap;
 }
 
-@media screen and (min-width: 1044px) {
+@media screen and (min-width: 65.25rem) {
   div .show-modal-btn {
     display: none;
   }
 }
-@media screen and (max-width: 1044px) {
+@media screen and (max-width: 65.25rem) {
   div .expand-form-btn,
   .expanded-input-space {
     display: none;
   }
+  .header-upper > h1 {
+    margin-left: -4rem;
+    padding-top: 0;
+    max-width: 13rem;
+  }
   .header-upper {
-    flex-direction: column;
-    align-items: baseline;
-    margin: 0rem auto 0rem auto;
+    align-content: flex-start;
+    align-items: last baseline;
+    background: rgba(255, 255, 255, 0)
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 10%,
+        rgba(255, 255, 255, 0.1) 40%,
+        rgba(255, 255, 255, 0.5) 75%,
+        rgba(255, 255, 255, 1) 100%
+      )
+      repeat scroll 0 0;
+  }
+  .header-lower {
+    height: 35rem;
   }
 }
 
@@ -178,7 +210,7 @@ export default {
 .custom-btn {
   width: 130px;
   height: 40px;
-  color: #fff;
+  color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 10px 25px;
   font-family: "Lato", sans-serif;
@@ -228,8 +260,9 @@ export default {
   transition: all 0.3s;
 }
 .btn-edit-items span:nth-child(1) {
-  box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9,
-    7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
+  box-shadow: -7px -7px 20px 0px rgba(255, 255, 255, 0.6),
+    -4px -4px 5px 0px rgba(255, 255, 255, 0.6),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.133), 4px 4px 5px 0px rgba(0, 0, 0, 0.067);
   -webkit-transform: rotateX(90deg);
   -moz-transform: rotateX(90deg);
   transform: rotateX(90deg);
