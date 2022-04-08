@@ -24,13 +24,11 @@
     </div>
   </Transition>
 </template>
-<script>
-export default {
-  props: {
-    show: Boolean,
-  },
-  emits: [close],
-};
+<script setup>
+const props = defineProps({
+  show: Boolean,
+});
+const emit = defineEmits(["close"]);
 </script>
 
 <style>

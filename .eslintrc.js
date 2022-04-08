@@ -5,9 +5,9 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'eslint:recommended',
-    'plugin:vue/vue3-recommended',
-    "prettier"
+    "eslint:recommended",
+    "plugin:vue/vue3-recommended",
+    "prettier",
     // 'plugin:vue/essential',
     // 'airbnb-base',
   ],
@@ -16,7 +16,7 @@ module.exports = {
   },
   plugins: [
     // 'vue',
+    // "vue/vue3-strongly-recommended",
   ],
-  rules: {
-  },
+  rules: {},
 };

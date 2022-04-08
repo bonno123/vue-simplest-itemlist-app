@@ -71,72 +71,62 @@
   </form>
 </template>
 
-<script>
+<script setup>
+import { computed } from "@vue/reactivity";
+import { ref } from "vue";
 import AppButton from "./AppButton.vue";
+const emit = defineEmits(["newItem"]);
 
-export default {
-  components: {
-    AppButton,
-  },
-  emits: ["newItem"],
-  data() {
-    return {
-      newItem: "",
-      newItemPriority: "false",
-      newItemType: "true",
-      newItemPackageType: "",
+const newItem = ref("");
+const newItemPriority = ref(false);
+const newItemType = ref("true");
+const newItemPackageType = ref("");
 
-      itemPackageTypeDict: ["check1", "check2", "check3", "check4"],
-    };
-  },
-  computed: {
-    charcount() {
-      return 50 - this.newItem.length;
-    },
-    isDisabled() {
-      return this.newItem.length < 5 || this.newItemPackageType.length == 0;
-    },
-  },
-  methods: {
-    sendNewItem() {
-      if (this.newItem.length >= 5 && this.newItemPackageType.length != 0) {
-        this.$emit("newItem", {
-          itemName: this.newItem,
-          priority: this.newItemPriority,
-          itemType: this.newItemType,
-          itemPackageType: this.newItemPackageType,
-        }),
-          (this.newItem = "");
-        this.newItemPriority = "false";
-        this.newItemType = "true";
-        document.getElementById(this.newItemPackageType).checked = false;
-        this.newItemPackageType = "";
-      }
-    },
+const itemPackageTypeDict = ref(["check1", "check2", "check3", "check4"]);
 
-    sinkItemPackageType(packtype) {
-      var sum_checked = false;
+const charcount = computed(() => {
+  return 50 - newItem.value.length;
+});
 
-      for (let i in this.itemPackageTypeDict) {
-        sum_checked =
-          sum_checked ||
-          document.getElementById(this.itemPackageTypeDict[i]).checked;
-      }
-      if (sum_checked == false) {
-        this.newItemPackageType = "";
-      } else {
-        this.newItemPackageType = packtype;
-        for (let i in this.itemPackageTypeDict) {
-          if (packtype != this.itemPackageTypeDict[i]) {
-            document.getElementById(
-              this.itemPackageTypeDict[i]
-            ).checked = false;
-          }
+const isDisabled = computed(() => {
+  return newItem.value.length < 4 || newItemPackageType.value.length == 0;
+});
+
+function sendNewItem() {
+  if (newItem.value.length >= 4 && newItemPackageType.value.length != 0) {
+    emit("newItem", {
+      itemName: newItem.value,
+      priority: newItemPriority.value,
+      itemType: newItemType.value,
+      itemPackageType: newItemPackageType.value,
+    }),
+      (newItem.value = "");
+    newItemPriority.value = false;
+    newItemType.value = "true";
+    document.getElementById(newItemPackageType.value).checked = false;
+    newItemPackageType.value = "";
+  }
+}
+
+function sinkItemPackageType(packtype) {
+  var sum_checked = false;
+
+  for (let i in itemPackageTypeDict.value) {
+    sum_checked =
+      sum_checked ||
+      document.getElementById(itemPackageTypeDict.value[i]).checked;
+    if (sum_checked == false) {
+      newItemPackageType.value = "";
+    } else {
+      newItemPackageType.value = packtype;
+      for (let i in itemPackageTypeDict.value) {
+        if (packtype != itemPackageTypeDict.value[i]) {
+          document.getElementById(itemPackageTypeDict.value[i]).checked = false;
         }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style>

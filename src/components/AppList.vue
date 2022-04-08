@@ -20,8 +20,8 @@
               <span
                 class="item-list-element-name"
                 :class="{
-                  strikeout: item.itemPurchesed === true,
-                  priority: item.priority == 'true',
+                  strikeout: item.itemPurchesed,
+                  priority: item.priority === 'true',
                 }"
                 @click="sendTogglePurchaseSignal(item.id)"
               >
@@ -29,7 +29,7 @@
               </span>
 
               <span
-                v-if="item.itemType === 'true' && !item.itemPurchesed"
+                v-if="item.itemType == 'true' && !item.itemPurchesed"
                 class="label-ebook"
               >
                 {{ $t("item-type-dict.paperback") }}
@@ -52,32 +52,23 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import { ref } from "vue";
 import AppButton from "./AppButton.vue";
 
-export default {
-  components: {
-    AppButton,
-  },
-  props: {
-    itemListForAppList: { type: Array, required: true },
-  },
-  emits: ["deleteSignal", "togglePurchase"],
-  data() {
-    return {
-      itemTypeDict: ["Paperback", "ebook"],
-    };
-  },
+const props = defineProps({
+  itemListForAppList: { type: Array, required: true },
+});
+const emit = defineEmits(["deleteSignal", "togglePurchase"]);
 
-  methods: {
-    sendDeleteSignal(itemId) {
-      this.$emit("deleteSignal", itemId);
-    },
-    sendTogglePurchaseSignal(itemId) {
-      this.$emit("togglePurchase", itemId);
-    },
-  },
-};
+const itemTypeDict = ref(["Paperback", "ebook"]);
+
+function sendDeleteSignal(itemId) {
+  emit("deleteSignal", itemId);
+}
+function sendTogglePurchaseSignal(itemId) {
+  emit("togglePurchase", itemId);
+}
 </script>
 
 <style>
