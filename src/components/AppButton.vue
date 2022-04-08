@@ -1,31 +1,31 @@
 <template>
   <button class="btn" :class="buttonClass">
-    <slot></slot>
+    <slot />
   </button>
 </template>
-<script>
-export default {
-  props: {
-    variant: { type: String, default: "" },
-  },
-  computed: {
-    buttonClass() {
-      if (this.variant === "delete") {
-        return "btn--delete";
-      }
-      if (this.variant === "cancel") {
-        return "btn--cancel";
-      }
-      if (this.variant === "save") {
-        return "btn--save";
-      }
-      if (this.variant === "add-item") {
-        return "btn--add-item";
-      }
-      return "";
-    },
-  },
-};
+
+<script setup>
+import { computed } from "vue";
+
+const props = defineProps({
+  variant: { type: String, default: "" },
+});
+
+const buttonClass = computed(() => {
+  if (props.variant === "delete") {
+    return "btn--delete";
+  }
+  if (props.variant === "cancel") {
+    return "btn--cancel";
+  }
+  if (props.variant === "save") {
+    return "btn--save";
+  }
+  if (props.variant === "add-item") {
+    return "btn--add-item";
+  }
+  return "";
+});
 </script>
 <style>
 .btn--add-item {

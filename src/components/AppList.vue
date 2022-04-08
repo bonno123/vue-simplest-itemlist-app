@@ -52,32 +52,45 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import { ref } from "vue";
 import AppButton from "./AppButton.vue";
 
-export default {
-  components: {
-    AppButton,
-  },
-  props: {
-    itemListForAppList: { type: Array, required: true },
-  },
-  emits: ["deleteSignal", "togglePurchase"],
-  data() {
-    return {
-      itemTypeDict: ["Paperback", "ebook"],
-    };
-  },
+const props = defineProps({
+  itemListForAppList: { type: Array, required: true },
+});
+const emit = defineEmits(["deleteSignal", "togglePurchase"]);
+const itemTypeDict = ref(["Paperback", "ebook"]);
+function sendDeleteSignal(itemId) {
+  emit("deleteSignal", itemId);
+}
+function sendTogglePurchaseSignal(itemId) {
+  emit("togglePurchase", itemId);
+}
 
-  methods: {
-    sendDeleteSignal(itemId) {
-      this.$emit("deleteSignal", itemId);
-    },
-    sendTogglePurchaseSignal(itemId) {
-      this.$emit("togglePurchase", itemId);
-    },
-  },
-};
+// export default {
+//   components: {
+//     AppButton,
+//   },
+//   props: {
+//     itemListForAppList: { type: Array, required: true },
+//   },
+//   emits: ["deleteSignal", "togglePurchase"],
+//   data() {
+//     return {
+//       itemTypeDict: ["Paperback", "ebook"],
+//     };
+//   },
+
+//   methods: {
+//     sendDeleteSignal(itemId) {
+//       this.$emit("deleteSignal", itemId);
+//     },
+//     sendTogglePurchaseSignal(itemId) {
+//       this.$emit("togglePurchase", itemId);
+//     },
+//   },
+// };
 </script>
 
 <style>

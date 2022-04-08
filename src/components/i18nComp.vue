@@ -9,6 +9,18 @@
 </template>
 
 <script>
+// import { ref } from "vue";
+
+// const localeValue = ref(false);
+
+// function setLocale() {
+//   if (localeValue.value) {
+//     this.$i18n.locale = "bn";
+//   } else {
+//     this.$i18n.locale = "en";
+//   }
+// }
+
 export default {
   data() {
     return {
@@ -71,7 +83,7 @@ export default {
   background: rgba(101, 100, 100, 0.91);
   left: 0.313rem;
   bottom: 0.156rem;
-  border-radius: 3.125;
+  border-radius: 3.125rem;
   transition: 0.3s cubic-bezier(0.42, 0, 0, 1.68);
 }
 

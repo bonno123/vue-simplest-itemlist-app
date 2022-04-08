@@ -4,11 +4,8 @@
   </div>
 </template>
 
-<script>
-import i18nComp from "./i18nComp.vue";
-export default {
-  components: { i18nComp },
-};
+<script setup>
+import I18nComp from "./I18nComp.vue";
 </script>
 
 <style>

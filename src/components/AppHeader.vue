@@ -25,7 +25,7 @@
           id="show-modal"
           class="app-p-sm"
           variant="add-item"
-          @click="$emit('open')"
+          @click="emit('open')"
         >
           {{ $t("buttons.showmodal") }}
         </app-button>
@@ -56,49 +56,48 @@
     </div>
   </div>
 </template>
-<script>
+
+<script setup>
+import { ref } from "vue";
+
 import AppList from "./AppList.vue";
 import AppButton from "./AppButton.vue";
 import InputField from "./InputField.vue";
 
-export default {
-  components: { AppList, AppButton, InputField },
-  props: {
-    itemList: { type: Array, required: true },
-  },
-  emits: ["editSignal", "open", "deleteSignal", "togglePurchase", "newItem"],
-  data() {
-    return {
-      showForm: false,
-      showLogo: true,
-      showModal: false,
-    };
-  },
-  methods: {
-    toggleForm() {
-      if (this.showForm == false) {
-        this.showLogo = !this.showLogo;
-        setTimeout(() => {
-          this.showForm = !this.showForm;
-        }, 540);
-      } else {
-        this.showForm = !this.showForm;
-        setTimeout(() => {
-          this.showLogo = !this.showLogo;
-        }, 10);
-      }
-    },
-    sendAnotherDeleteSignal(itemId) {
-      this.$emit("deleteSignal", itemId);
-    },
-    sendAnotherTogglePurchaseSignal(itemId) {
-      this.$emit("togglePurchase", itemId);
-    },
-    sendNewItemAgain(e) {
-      this.$emit("newItem", e);
-    },
-  },
-};
+const emit = defineEmits(["deleteSignal", "togglePurchase", "newItem", "open"]);
+const props = defineProps({
+  itemList: { type: Array, required: true },
+});
+
+const showForm = ref(false);
+const showLogo = ref(true);
+// const showModal = ref(false);
+
+function toggleForm() {
+  if (showForm.value) {
+    showForm.value = !showForm.value;
+    setTimeout(() => {
+      showLogo.value = !showLogo.value;
+    }, 10);
+  } else {
+    showLogo.value = !showLogo.value;
+    setTimeout(() => {
+      showForm.value = !showForm.value;
+    }, 540);
+  }
+}
+
+function sendAnotherDeleteSignal(itemId) {
+  emit("deleteSignal", itemId);
+}
+
+function sendAnotherTogglePurchaseSignal(itemId) {
+  emit("togglePurchase", itemId);
+}
+
+function sendNewItemAgain(e) {
+  emit("newItem", e);
+}
 </script>
 
 <style>

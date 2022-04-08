@@ -5,6 +5,7 @@ import bengaliTranslations from "./locale/bn.json";
 const messages = { en: englishTranslations, bn: bengaliTranslations };
 
 const i18n = createI18n({
+  // legacy: false, // you must set `false`, to use Composition API
   locale: "en", // set locale
   fallbackLocale: "en", // set fallback locale
   messages, // set locale messages

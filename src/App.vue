@@ -28,102 +28,81 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed, onMounted, ref } from "vue";
+
 import InputField from "./components/InputField.vue";
 import AppHeader from "./components/AppHeader.vue";
 import InputModal from "./components/InputModal.vue";
 import AppNavBar from "./components/AppNavBar.vue";
 
-export default {
-  components: {
-    InputField,
-    AppHeader,
-    InputModal,
-    AppNavBar,
-  },
+const set_id = ref(1);
+const showModal = ref(false);
+const items = ref([]);
 
-  data() {
-    return {
-      set_id: 1,
-      expandForm: false,
-      showModal: false,
-      items: [],
-    };
-  },
-  computed: {
-    filterPurchasedItems() {
-      return [...this.items].filter((item) => !item.itemPurchesed);
-    },
-    reversedItemArr() {
-      return [...this.items].reverse();
-    },
-  },
-  mounted() {
-    this.checkItemList();
-  },
-  methods: {
-    addItem(e) {
-      let newItem = {
-        id: this.set_id++,
-        itemName: e.itemName,
-        priority: e.priority,
-        itemType: e.itemType,
-        itemPackageType: e.itemPackageType,
-        itemPurchesed: false,
-      };
-      this.items.push(newItem);
-      localStorage.setItem(newItem.id, JSON.stringify(newItem));
-    },
-    removeItem(e) {
-      this.items.splice(
-        this.items.findIndex((x) => x.id === e),
-        1
-      );
-      localStorage.removeItem(e);
-    },
-    editForm() {
-      this.expandForm = !this.expandForm;
-    },
-    togglePurchase(e) {
-      this.items.find((x) => x.id === e).itemPurchesed = !this.items.find(
-        (x) => x.id === e
-      ).itemPurchesed;
-      localStorage.setItem(
-        e,
-        JSON.stringify(this.items.find((x) => x.id === e))
-      );
-    },
-    openModal() {
-      this.showModal = true;
-    },
-    checkItemList() {
-      if (localStorage.length > 0) {
-        this.items = [];
-        const key_list = [];
-        for (let i = 0; i < localStorage.length; i++) {
-          var Item = JSON.parse(localStorage.getItem(localStorage.key(i)));
-          key_list.push(Item.id);
+function addItem(e) {
+  let newItem = {
+    id: set_id.value++,
+    itemName: e.itemName,
+    priority: e.priority,
+    itemType: e.itemType,
+    itemPackageType: e.itemPackageType,
+    itemPurchesed: false,
+  };
+  items.value.push(newItem);
+  localStorage.setItem(newItem.id, JSON.stringify(newItem));
+}
 
-          if (Item.id != null) {
-            this.items.push({
-              id: Item.id,
-              itemName: Item.itemName,
-              priority: Item.priority,
-              itemType: Item.itemType,
-              itemPackageType: Item.itemPackageType,
-              itemPurchesed: Item.itemPurchesed,
-            });
-          }
-        }
-        this.set_id = Math.max(...key_list) + 1;
-      } else {
-        for (let i = 0; i < this.items.length; i++) {
-          localStorage.setItem(this.items[i].id, JSON.stringify(this.items[i]));
-        }
+function removeItem(e) {
+  items.value.splice(
+    items.value.findIndex((x) => x.id === e),
+    1
+  );
+  localStorage.removeItem(e);
+}
+
+function togglePurchase(e) {
+  items.value.find((x) => x.id === e).itemPurchesed = !items.value.find(
+    (x) => x.id === e
+  ).itemPurchesed;
+  localStorage.setItem(e, JSON.stringify(items.value.find((x) => x.id === e)));
+}
+function openModal() {
+  showModal.value = true;
+}
+
+function checkItemList() {
+  if (localStorage.length > 0) {
+    // const items = ref([]);
+    const key_list = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      var Item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      key_list.push(Item.id);
+      if (Item.id != null) {
+        items.value.push({
+          id: Item.id,
+          itemName: Item.itemName,
+          priority: Item.priority,
+          itemType: Item.itemType,
+          itemPackageType: Item.itemPackageType,
+          itemPurchesed: Item.itemPurchesed,
+        });
       }
-    },
-  },
-};
+    }
+    set_id.value = Math.max(...key_list) + 1;
+  } else {
+    for (let i = 0; i < items.value.length; i++) {
+      localStorage.setItem(items[i].id, JSON.stringify(items[i]));
+    }
+  }
+}
+
+const reversedItemArr = computed(() => {
+  return [...items.value].reverse();
+});
+onMounted(() => {
+  checkItemList();
+});
 </script>
 
 <style>
